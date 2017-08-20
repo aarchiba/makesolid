@@ -3,6 +3,7 @@
 from __future__ import division, print_function
 
 import numpy as np
+import solid
 
 class Mesh(object):
     def __init__(self):
@@ -26,6 +27,8 @@ class Mesh(object):
             raise ValueError("Triangle (%d,%d,%d) contains undefined vertex;"
                              " only %d available" % (i,j,k,len(self.vertices)))
 
+    def as_scad(self):
+        return solid.polyhedron(points=self.vertices, faces=self.triangles)
 
 def uv_surface(xyz):
     xyz = np.asarray(xyz)
