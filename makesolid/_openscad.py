@@ -36,7 +36,8 @@ class OpenSCAD:
                                   file_header=header)
         I = self._popen(["-o", stl_name, f.name])
         if I.wait():
-            raise CalledProcessError(
+            raise subprocess.CalledProcessError(
                 "OpenSCAD failed to render thing from %s to %s"
-                % (stl_name, f.name))
-        
+                % (f.name, stl_name),
+                cmd="openscad")
+
