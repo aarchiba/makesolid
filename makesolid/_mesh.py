@@ -93,7 +93,7 @@ def helix_extrude(points, turns, vertical_motion_per_turn,
 
     return uv_surface(xyz).as_scad()
 
-def tube(xyz, radius, segments=16, cap_ends=True, up=None):
+def tube(xyz, radius, segments=16, cap_ends=True, up=None, angle=0.):
     """Make a tube along the curve specified by xyz"""
 
     xyz = np.asarray(xyz, dtype=float)
@@ -122,7 +122,7 @@ def tube(xyz, radius, segments=16, cap_ends=True, up=None):
     if not np.all(np.isfinite(r)):
         raise ValueError("Right vectors zero somewhere")
 
-    angles = np.linspace(0,2*np.pi,segments+1)[None,None,:]
+    angles = np.linspace(0,2*np.pi,segments+1)[None,None,:] + np.deg2rad(angle)
     tube = (xyz[:,:,None]
                 +radius*r[:,:,None]*np.cos(angles)
                 +radius*u[:,:,None]*np.sin(angles))
