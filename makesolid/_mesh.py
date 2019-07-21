@@ -66,7 +66,10 @@ def uv_surface(xyz):
 
 def helix_extrude(points, turns, vertical_motion_per_turn,
                   steps_per_turn=16):
-    """Spiral the shape specified by points around the z axis"""
+    """Spiral the shape specified by points around the z axis
+
+    If turns is positive, you get a left-hand spiral
+    """
     if turns<=0:
         raise ValueError("Number of turns must be positive but got %s" % turns)
     n = max(int(np.ceil(turns*steps_per_turn)+1),2)

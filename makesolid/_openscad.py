@@ -2,6 +2,7 @@
 
 from __future__ import division, print_function
 
+import sys
 import subprocess
 import tempfile
 import solid
@@ -34,10 +35,11 @@ class OpenSCAD:
         f = tempfile.NamedTemporaryFile(suffix=".scad", delete=True)
         solid.scad_render_to_file(thing,f.name,
                                   file_header=header)
-        I = self._popen(["-o", stl_name, f.name])
-        if I.wait():
-            raise subprocess.CalledProcessError(
-                "OpenSCAD failed to render thing from %s to %s"
-                % (f.name, stl_name),
-                cmd="openscad")
-
+        try:
+            I = subprocess.run(["openscad","-o", stl_name, f.name],
+                    capture_output=True,
+                    check=True)
+        except subprocess.CalledProcessError as e:
+            sys.stdout.write(e.stdout)
+            sys.stderr.write(e.stderr)
+            raise
