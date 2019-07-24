@@ -65,7 +65,7 @@ def uv_surface(xyz):
 
 
 def helix_extrude(points, turns, vertical_motion_per_turn,
-                  steps_per_turn=16):
+                  steps_per_turn=16,convexity=4):
     """Spiral the shape specified by points around the z axis
 
     If turns is positive, you get a left-hand spiral
